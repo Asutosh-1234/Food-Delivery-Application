@@ -1,11 +1,11 @@
 import React, { useRef } from "react";
 import {
-	Animated,
-	Image,
-	Pressable,
-	StyleSheet,
-	Text,
-	View,
+  Animated,
+  Image,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
 } from "react-native";
 
 // Define the precise data interface for your SaaS structure

@@ -72,7 +72,10 @@ function TabNavigator() {
 function CustomDrawerContent(props: any) {
   return (
     <View style={{ flex: 1, backgroundColor: "#0B0F19" }}>
-      <DrawerContentScrollView {...props} contentContainerStyle={{ paddingTop: 0 }}>
+      <DrawerContentScrollView
+        {...props}
+        contentContainerStyle={{ paddingTop: 0 }}
+      >
         {/* Profile Header */}
         <View style={styles.drawerHeader}>
           <Image
@@ -89,7 +92,7 @@ function CustomDrawerContent(props: any) {
           <DrawerItemList {...props} />
         </View>
       </DrawerContentScrollView>
-      
+
       <View style={styles.drawerFooter}>
         <Text style={styles.versionText}>App Version 1.0.0</Text>
       </View>
@@ -133,7 +136,9 @@ function DrawerRoot() {
         component={TabNavigator}
         options={{
           title: "Home",
-          drawerIcon: ({ color }) => <Ionicons name="home-outline" size={22} color={color} />,
+          drawerIcon: ({ color }) => (
+            <Ionicons name="home-outline" size={22} color={color} />
+          ),
         }}
       />
       <Drawer.Screen
@@ -141,7 +146,9 @@ function DrawerRoot() {
         component={MyOrder}
         options={{
           title: "My Orders",
-          drawerIcon: ({ color }) => <Ionicons name="receipt-outline" size={22} color={color} />,
+          drawerIcon: ({ color }) => (
+            <Ionicons name="receipt-outline" size={22} color={color} />
+          ),
         }}
       />
       <Drawer.Screen
@@ -149,7 +156,9 @@ function DrawerRoot() {
         component={SettingIndex}
         options={{
           title: "Settings",
-          drawerIcon: ({ color }) => <Ionicons name="settings-outline" size={22} color={color} />,
+          drawerIcon: ({ color }) => (
+            <Ionicons name="settings-outline" size={22} color={color} />
+          ),
         }}
       />
       <Drawer.Screen
@@ -157,7 +166,9 @@ function DrawerRoot() {
         component={HelpIndex}
         options={{
           title: "Help & Support",
-          drawerIcon: ({ color }) => <Ionicons name="help-circle-outline" size={22} color={color} />,
+          drawerIcon: ({ color }) => (
+            <Ionicons name="help-circle-outline" size={22} color={color} />
+          ),
         }}
       />
       <Drawer.Screen
@@ -165,7 +176,9 @@ function DrawerRoot() {
         component={LogoutIndex}
         options={{
           title: "Logout",
-          drawerIcon: ({ color }) => <Ionicons name="log-out-outline" size={22} color={color} />,
+          drawerIcon: ({ color }) => (
+            <Ionicons name="log-out-outline" size={22} color={color} />
+          ),
         }}
       />
     </Drawer.Navigator>
@@ -174,7 +187,10 @@ function DrawerRoot() {
 
 export default function Index() {
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: "#0B0F19" }} edges={["right", "left"]}>
+    <SafeAreaView
+      style={{ flex: 1, backgroundColor: "#0B0F19" }}
+      edges={["right", "left"]}
+    >
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         <Stack.Screen name="DrawerRoot" component={DrawerRoot} />
         <Stack.Screen name="RestaurantDetails" component={RestaurantDetails} />

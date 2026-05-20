@@ -50,7 +50,7 @@ export default function GetStartedScreen() {
   const startFloatingAnimation = (
     animation: Animated.Value,
     duration: number,
-    toValue: number
+    toValue: number,
   ) => {
     Animated.loop(
       Animated.sequence([
@@ -64,7 +64,7 @@ export default function GetStartedScreen() {
           duration,
           useNativeDriver: true,
         }),
-      ])
+      ]),
     ).start();
   };
 
@@ -124,13 +124,16 @@ export default function GetStartedScreen() {
 
         {/* Subtitle description */}
         <Text style={styles.subtitle}>
-          The white-label orchestration engine built for modern restaurant chains
-          and local delivery fleets.
+          The white-label orchestration engine built for modern restaurant
+          chains and local delivery fleets.
         </Text>
 
         {/* Fixed Interactive Button Flow */}
         <Animated.View
-          style={[styles.buttonWrapper, { transform: [{ scale: buttonScale }] }]}
+          style={[
+            styles.buttonWrapper,
+            { transform: [{ scale: buttonScale }] },
+          ]}
         >
           <Link href="/" asChild>
             <Pressable
@@ -147,7 +150,9 @@ export default function GetStartedScreen() {
           </Link>
         </Animated.View>
 
-        <Text style={styles.footerText}>v1.0.0 • Production Ready Platform</Text>
+        <Text style={styles.footerText}>
+          v1.0.0 • Production Ready Platform
+        </Text>
       </Animated.View>
     </View>
   );
