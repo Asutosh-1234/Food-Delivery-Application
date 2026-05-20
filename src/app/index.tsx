@@ -28,61 +28,36 @@ function TabNavigator() {
     <Tab.Navigator
       screenOptions={({ route }) => ({
         headerShown: false,
-        tabBarShowLabel: false,
+        tabBarShowLabel: true,
+        tabBarActiveTintColor: "#FF6600",
+        tabBarInactiveTintColor: "#64748B",
         tabBarStyle: {
-          position: "absolute",
-          bottom: 24,
-          left: 20,
-          right: 20,
-          backgroundColor: "rgba(15, 23, 42, 0.95)",
-          borderRadius: 24,
-          height: 68,
-          borderWidth: 1,
-          borderColor: "rgba(255, 255, 255, 0.08)",
-          elevation: 10,
-          shadowColor: "#000",
-          shadowOffset: { width: 0, height: 10 },
-          shadowOpacity: 0.3,
-          shadowRadius: 20,
+          backgroundColor: "#1E293B",
+          borderTopWidth: 1,
+          borderTopColor: "rgba(255, 255, 255, 0.05)",
+          height: 65,
+          paddingBottom: 10,
+          paddingTop: 10,
+        },
+        tabBarLabelStyle: {
+          fontSize: 11,
+          fontWeight: "700",
+          marginTop: 4,
         },
         tabBarIcon: ({ focused, color, size }) => {
           let iconName;
 
           if (route.name === "Home") {
             iconName = focused ? "home" : "home-outline";
-          } else if (route.name === "Profile") {
-            iconName = focused ? "person" : "person-outline";
-          } else if (route.name === "Order") {
-            iconName = focused ? "bag" : "bag-outline";
           } else if (route.name === "Search") {
             iconName = focused ? "search" : "search-outline";
+          } else if (route.name === "Order") {
+            iconName = focused ? "receipt" : "receipt-outline";
+          } else if (route.name === "Profile") {
+            iconName = focused ? "person" : "person-outline";
           }
 
-          return (
-            <View style={{ alignItems: "center", justifyContent: "center" }}>
-              <View
-                style={{
-                  backgroundColor: focused ? "rgba(255, 102, 0, 0.15)" : "transparent",
-                  padding: 10,
-                  borderRadius: 20,
-                }}
-              >
-                <Ionicons name={iconName as any} size={24} color={focused ? "#FF6600" : "#94A3B8"} />
-              </View>
-              {focused && (
-                <View
-                  style={{
-                    position: "absolute",
-                    bottom: -6,
-                    width: 4,
-                    height: 4,
-                    backgroundColor: "#FF6600",
-                    borderRadius: 2,
-                  }}
-                />
-              )}
-            </View>
-          );
+          return <Ionicons name={iconName as any} size={24} color={color} />;
         },
       })}
     >
