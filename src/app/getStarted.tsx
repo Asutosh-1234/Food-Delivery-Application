@@ -135,7 +135,7 @@ export default function GetStartedScreen() {
             { transform: [{ scale: buttonScale }] },
           ]}
         >
-          <Link href="/" asChild>
+          <Link href="/signup" asChild>
             <Pressable
               onPressIn={onPressIn}
               onPressOut={onPressOut}
