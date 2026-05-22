@@ -27,7 +27,7 @@ interface RestaurantData {
 
 interface RestaurantCardProps {
   restaurant: RestaurantData;
-  onPress?: (id: string) => void;
+  onPress?: (id: string, name: string, price: number) => void;
 }
 
 export default function RestaurantCard({
@@ -59,7 +59,7 @@ export default function RestaurantCard({
       <Pressable
         onPressIn={handlePressIn}
         onPressOut={handlePressOut}
-        onPress={() => onPress?.(restaurant.id)}
+        onPress={() => onPress?.(restaurant.id, restaurant.name, restaurant.deliveryFee)}
         style={styles.pressableArea}
       >
         <View style={styles.imageWrapper}>

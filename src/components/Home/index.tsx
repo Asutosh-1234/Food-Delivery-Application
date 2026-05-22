@@ -1,9 +1,12 @@
+import { useNavigation } from "@react-navigation/native";
 import React from "react";
 import { FlatList, StyleSheet, View } from "react-native";
 import { restaurants } from "../data";
 import RestaurantCard from "./ResturantCard";
 
-const HomeScreen = ({ navigation }: any) => {
+const HomeScreen = () => {
+  const navigation = useNavigation<any>();
+  
   return (
     <View style={styles.container}>
       <FlatList
@@ -14,7 +17,9 @@ const HomeScreen = ({ navigation }: any) => {
           return (
             <RestaurantCard
               restaurant={restaurantData}
-              onPress={(id) => navigation.navigate("RestaurantDetails", { id })}
+              onPress={(id, name, price) => 
+                navigation.navigate("RestaurantDetails", { id, name, price })
+              }
             />
           );
         }}

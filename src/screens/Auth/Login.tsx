@@ -1,5 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
-import { Link, useRouter } from "expo-router";
+import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import React, { useState } from "react";
 import {
   KeyboardAvoidingView,
@@ -12,15 +13,15 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-export default function SignupScreen() {
-  const router = useRouter();
-  const [name, setName] = useState("");
+export default function LoginScreen() {
+  const navigation = useNavigation<any>();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSignup = () => {
-    // Navigate to Login after registration
-    router.replace("/login");
+  const handleLogin = async () => {
+    // Navigate to Home screen after login
+    await AsyncStorage.setItem("userToken", "dummy_token");
+    navigation.replace("MainTabs");
   };
 
   return (
@@ -30,22 +31,11 @@ export default function SignupScreen() {
         style={styles.content}
       >
         <View style={styles.header}>
-          <Text style={styles.title}>Create Account</Text>
-          <Text style={styles.subtitle}>Join us to discover great food around you.</Text>
+          <Text style={styles.title}>Welcome Back!</Text>
+          <Text style={styles.subtitle}>Login to track your orders and explore.</Text>
         </View>
 
         <View style={styles.form}>
-          <View style={styles.inputGroup}>
-            <Ionicons name="person-outline" size={20} color="#94A3B8" style={styles.inputIcon} />
-            <TextInput
-              style={styles.input}
-              placeholder="Full Name"
-              placeholderTextColor="#64748B"
-              value={name}
-              onChangeText={setName}
-            />
-          </View>
-
           <View style={styles.inputGroup}>
             <Ionicons name="mail-outline" size={20} color="#94A3B8" style={styles.inputIcon} />
             <TextInput
@@ -72,21 +62,19 @@ export default function SignupScreen() {
           </View>
 
           <TouchableOpacity 
-            style={styles.registerButton} 
+            style={styles.loginButton} 
             activeOpacity={0.8}
-            onPress={handleSignup}
+            onPress={handleLogin}
           >
-            <Text style={styles.registerButtonText}>Register</Text>
+            <Text style={styles.loginButtonText}>Login</Text>
           </TouchableOpacity>
         </View>
 
         <View style={styles.footer}>
-          <Text style={styles.footerText}>Already have an account? </Text>
-          <Link href="/login" asChild>
-            <TouchableOpacity>
-              <Text style={styles.loginLink}>Login here</Text>
-            </TouchableOpacity>
-          </Link>
+          <Text style={styles.footerText}>Don't have an account? </Text>
+          <TouchableOpacity onPress={() => navigation.navigate("Signup")}>
+            <Text style={styles.signupLink}>Register here</Text>
+          </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>
     </SafeAreaView>
@@ -138,20 +126,20 @@ const styles = StyleSheet.create({
     color: "#F8FAFC",
     fontSize: 16,
   },
-  registerButton: {
-    backgroundColor: "#FF6600",
+  loginButton: {
+    backgroundColor: "#3B82F6", // Consistent with getStarted
     height: 56,
     borderRadius: 16,
     justifyContent: "center",
     alignItems: "center",
     marginTop: 16,
-    shadowColor: "#FF6600",
+    shadowColor: "#3B82F6",
     shadowOffset: { width: 0, height: 6 },
     shadowOpacity: 0.3,
     shadowRadius: 10,
     elevation: 8,
   },
-  registerButtonText: {
+  loginButtonText: {
     color: "#FFFFFF",
     fontSize: 16,
     fontWeight: "800",
@@ -166,8 +154,8 @@ const styles = StyleSheet.create({
     color: "#94A3B8",
     fontSize: 14,
   },
-  loginLink: {
-    color: "#FF6600",
+  signupLink: {
+    color: "#3B82F6",
     fontSize: 14,
     fontWeight: "700",
   },

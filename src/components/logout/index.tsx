@@ -1,15 +1,20 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import React from "react";
 import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
 const LogoutIndex = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     // Navigates to the initial auth screen (getStarted) upon logout
-    navigation.navigate("getStarted" as never);
+    await AsyncStorage.removeItem("userToken");
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'Auth' }],
+    });
   };
 
   const handleCancel = () => {

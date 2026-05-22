@@ -1,4 +1,4 @@
-import { Link } from "expo-router";
+import { useNavigation } from "@react-navigation/native";
 import React, { useEffect, useRef } from "react";
 import {
   Animated,
@@ -13,6 +13,7 @@ import {
 const { width } = Dimensions.get("window");
 
 export default function GetStartedScreen() {
+  const navigation = useNavigation<any>();
   const fadeAnim = useRef(new Animated.Value(0)).current;
   const slideAnim = useRef(new Animated.Value(30)).current;
   const scaleAnim = useRef(new Animated.Value(0.95)).current;
@@ -135,19 +136,18 @@ export default function GetStartedScreen() {
             { transform: [{ scale: buttonScale }] },
           ]}
         >
-          <Link href="/signup" asChild>
-            <Pressable
-              onPressIn={onPressIn}
-              onPressOut={onPressOut}
-              style={({ pressed }) => [
-                styles.button,
-                pressed && styles.buttonPressed,
-              ]}
-            >
-              <Text style={styles.buttonText}>Launch Platform</Text>
-              <Text style={styles.buttonArrow}>→</Text>
-            </Pressable>
-          </Link>
+          <Pressable
+            onPressIn={onPressIn}
+            onPressOut={onPressOut}
+            onPress={() => navigation.navigate("Signup")}
+            style={({ pressed }) => [
+              styles.button,
+              pressed && styles.buttonPressed,
+            ]}
+          >
+            <Text style={styles.buttonText}>Launch Platform</Text>
+            <Text style={styles.buttonArrow}>→</Text>
+          </Pressable>
         </Animated.View>
 
         <Text style={styles.footerText}>

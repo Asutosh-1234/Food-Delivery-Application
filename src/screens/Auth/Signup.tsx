@@ -1,5 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
-import { Link, useRouter } from "expo-router";
+import { useNavigation } from "@react-navigation/native";
 import React, { useState } from "react";
 import {
   KeyboardAvoidingView,
@@ -12,14 +12,15 @@ import {
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 
-export default function LoginScreen() {
-  const router = useRouter();
+export default function SignupScreen() {
+  const navigation = useNavigation<any>();
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleLogin = () => {
-    // Navigate to Home screen after login
-    router.replace("/");
+  const handleSignup = () => {
+    // Navigate to Login after registration
+    navigation.replace("Login");
   };
 
   return (
@@ -29,11 +30,22 @@ export default function LoginScreen() {
         style={styles.content}
       >
         <View style={styles.header}>
-          <Text style={styles.title}>Welcome Back!</Text>
-          <Text style={styles.subtitle}>Login to track your orders and explore.</Text>
+          <Text style={styles.title}>Create Account</Text>
+          <Text style={styles.subtitle}>Join us to discover great food around you.</Text>
         </View>
 
         <View style={styles.form}>
+          <View style={styles.inputGroup}>
+            <Ionicons name="person-outline" size={20} color="#94A3B8" style={styles.inputIcon} />
+            <TextInput
+              style={styles.input}
+              placeholder="Full Name"
+              placeholderTextColor="#64748B"
+              value={name}
+              onChangeText={setName}
+            />
+          </View>
+
           <View style={styles.inputGroup}>
             <Ionicons name="mail-outline" size={20} color="#94A3B8" style={styles.inputIcon} />
             <TextInput
@@ -60,21 +72,19 @@ export default function LoginScreen() {
           </View>
 
           <TouchableOpacity 
-            style={styles.loginButton} 
+            style={styles.registerButton} 
             activeOpacity={0.8}
-            onPress={handleLogin}
+            onPress={handleSignup}
           >
-            <Text style={styles.loginButtonText}>Login</Text>
+            <Text style={styles.registerButtonText}>Register</Text>
           </TouchableOpacity>
         </View>
 
         <View style={styles.footer}>
-          <Text style={styles.footerText}>Don't have an account? </Text>
-          <Link href="/signup" asChild>
-            <TouchableOpacity>
-              <Text style={styles.signupLink}>Register here</Text>
-            </TouchableOpacity>
-          </Link>
+          <Text style={styles.footerText}>Already have an account? </Text>
+          <TouchableOpacity onPress={() => navigation.navigate("Login")}>
+            <Text style={styles.loginLink}>Login here</Text>
+          </TouchableOpacity>
         </View>
       </KeyboardAvoidingView>
     </SafeAreaView>
@@ -126,20 +136,20 @@ const styles = StyleSheet.create({
     color: "#F8FAFC",
     fontSize: 16,
   },
-  loginButton: {
-    backgroundColor: "#3B82F6", // Consistent with getStarted
+  registerButton: {
+    backgroundColor: "#FF6600",
     height: 56,
     borderRadius: 16,
     justifyContent: "center",
     alignItems: "center",
     marginTop: 16,
-    shadowColor: "#3B82F6",
+    shadowColor: "#FF6600",
     shadowOffset: { width: 0, height: 6 },
     shadowOpacity: 0.3,
     shadowRadius: 10,
     elevation: 8,
   },
-  loginButtonText: {
+  registerButtonText: {
     color: "#FFFFFF",
     fontSize: 16,
     fontWeight: "800",
@@ -154,8 +164,8 @@ const styles = StyleSheet.create({
     color: "#94A3B8",
     fontSize: 14,
   },
-  signupLink: {
-    color: "#3B82F6",
+  loginLink: {
+    color: "#FF6600",
     fontSize: 14,
     fontWeight: "700",
   },

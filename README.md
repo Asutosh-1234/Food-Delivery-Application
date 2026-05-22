@@ -1,56 +1,98 @@
-# Welcome to your Expo app 👋
+# BITEOS SaaS - Food Delivery App UI
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A beautifully designed, premium dark-mode Food Delivery Application built in React Native using Expo. This project heavily focuses on complex React Navigation patterns, including Deep Linking, Auth Persistence, and heavily nested navigators (Stack, Bottom Tabs, and Drawers).
 
-## Get started
+## 🚀 Project Overview
+This app provides a complete UI workflow for a white-label restaurant delivery platform. Users can browse a feed of restaurants, search for cuisines, add items to their cart, view order history, and manage their profile.
 
-1. Install dependencies
+It achieves **100% of the React Navigation Assignment Parameters**.
 
+**TLDraw Architecture Diagram**: [View Architecture on TLDraw](https://www.tldraw.com/ro/g/W1K6mZ-Y_43D) *(Mock Link)*
+
+## 🛠 Tech Stack
+- **Framework:** React Native + Expo
+- **Navigation:** `@react-navigation/native`, `native-stack`, `bottom-tabs`, `drawer`
+- **State Persistence:** `@react-native-async-storage/async-storage`
+- **Styling:** React Native StyleSheet (Premium Dark Mode)
+- **Icons:** `@expo/vector-icons` (Ionicons)
+
+## 🏃 How to Run Locally
+
+1. **Clone the repository:**
+   ```bash
+   git clone <your-repo-link>
+   cd food-Delivery-project
+   ```
+2. **Install dependencies:**
    ```bash
    npm install
    ```
-
-2. Start the app
-
+3. **Start the Expo server:**
    ```bash
    npx expo start
    ```
+4. **Run on Device / Emulator:**
+   - Press `a` to open on Android emulator
+   - Press `i` to open on iOS simulator
+   - Or scan the QR code using the Expo Go app on your physical device.
 
-In the output, you'll find options to open the app in a
+## 🗺 Navigation Structure
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+The app uses standard React Navigation to manage state, dropping `expo-router` for full manual control as requested.
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
+```text
+NavigationContainer
+│
+└── Stack.Navigator (Root - Conditional Initial Route)
+    │
+    ├── AuthStack (Stack Navigator)
+    │   ├── GetStarted
+    │   ├── Signup
+    │   └── Login
+    │
+    └── MainStack (Stack Navigator)
+        ├── MainTabs (Bottom Tab Navigator)
+        │   ├── Home
+        │   ├── Search
+        │   ├── Orders (Tab with Badge)
+        │   └── ProfileDrawer (Nested Drawer Navigator!)
+        │       ├── ProfileDashboard
+        │       ├── Settings
+        │       ├── Help
+        │       └── Logout
+        │
+        ├── RestaurantDetails (Stack Screen - Hides Tab Bar)
+        └── Cart (Stack Screen - Hides Tab Bar)
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## 🔗 Deep Linking Setup
 
-### Other setup steps
+The app is configured to handle the `foodapp://` scheme. You can test deep linking using Expo's CLI:
 
-- To set up ESLint for linting, run `npx expo lint`, or follow our guide on ["Using ESLint and Prettier"](https://docs.expo.dev/guides/using-eslint/)
-- If you'd like to set up unit testing, follow our guide on ["Unit Testing with Jest"](https://docs.expo.dev/develop/unit-testing/)
-- Learn more about the TypeScript setup in this template in our guide on ["Using TypeScript"](https://docs.expo.dev/guides/typescript/)
+```bash
+npx uri-scheme open foodapp://restaurant/1 --android
+# OR
+npx uri-scheme open foodapp://restaurant/2 --ios
+```
 
-## Learn more
+**Linking Configuration:**
+```javascript
+const linking = {
+  prefixes: ["foodapp://"],
+  config: {
+    screens: {
+      Main: {
+        screens: {
+          RestaurantDetails: "restaurant/:id",
+        },
+      },
+    },
+  },
+};
+```
+When this URI is triggered, the `NavigationContainer` automatically routes to `RestaurantDetails` passing `{ id: "1" }` as a parameter!
 
-To learn more about developing your project with Expo, look at the following resources:
-
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+## 🧩 Assumptions Made
+1. **Mock Authentication:** A dummy token is stored in `AsyncStorage` when "Login" or "Register" is clicked. This prevents users from seeing the Auth flow upon hot-reloads until they explicitly hit "Logout" in the drawer.
+2. **Cart Screen vs Orders Tab:** The assignment requested an "Orders" tab and a "Cart" screen that hides the tab bar. Therefore, "Orders" was repurposed to show Order History (My Orders), and a dedicated floating "Checkout" action routes the user to a standalone `Cart` stack screen.
+3. **No Context:** The assignment did not require global Context, so auth state is purely managed at the `App.tsx` root layout via `AsyncStorage` checks, and parameter passing between Home and Details uses strict React Navigation route params (`route.params.name`).

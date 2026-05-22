@@ -110,7 +110,9 @@ const SearchIndex = () => {
               return (
                 <RestaurantCard
                   restaurant={restaurantData}
-                  onPress={(id) => navigation.navigate("RestaurantDetails", { id })}
+                  onPress={(id, name, price) => 
+                    navigation.navigate("RestaurantDetails", { id, name, price })
+                  }
                 />
               );
             }}
